@@ -1,162 +1,132 @@
-# 🏦 Bank Management System - OOP
+# Bank Management System
 
-A feature-rich **console-based Bank Management System** developed in **C++** with a strong focus on **Object-Oriented Programming, file-based persistence, access control, transaction processing, and modular software design**.
+A console-based **Bank Management System** developed in C++ to simulate common banking operations while applying Object-Oriented Programming, file handling, authentication, authorization, validation, and modular software design.
 
-This project simulates the core operations of a banking environment, including client management, employee/user management, financial transactions, money transfers, currency management, authentication, authorization, and transaction logging.
+The project was built as a practical C++ application rather than a collection of isolated exercises. It manages bank clients, system users, transactions, currencies, and persistent records through a structured set of classes and modules.
 
----
+## Overview
 
-## 📌 Overview
+The system provides two main sides of the banking environment:
 
-The system is designed as a complete banking management application rather than a simple CRUD project.
+* **Bank Clients** — customers who have accounts and balances.
+* **Bank Users** — system users/operators who are authorized to perform administrative and banking operations.
 
-It provides separate modules for:
+The application supports client management, user management, deposits, withdrawals, transfers, transaction logging, currency management, authentication, and permission-based access control.
 
-* 👤 Bank User Management
-* 👥 Client Management
-* 💰 Deposits & Withdrawals
-* 🔄 Money Transfers
-* 📊 Balance Management
-* 💱 Currency Management
-* 🔐 Authentication & Authorization
-* 📝 Login & Transaction Logging
-* 📅 Date and time utilities
-* ✅ Input validation
-* 🧰 Reusable utility functions
-
-The application uses a modular structure that separates the **core business entities**, **reusable libraries**, and **user-interface screens**.
+All persistent data is handled through text files, so the application does not require an external database.
 
 ---
 
-# ✨ Main Features
+## Features
 
-## 👥 Client Management
+### Client Management
 
-The system provides complete client management functionality:
+The system provides the main operations required to manage bank clients:
 
-* Add new clients
-* Update existing client information
-* Delete clients
-* Search for clients
-* Display all clients
-* Check account existence
-* Manage account numbers
-* Manage PIN codes
-* Track account balances
+* Add a new client
+* Update client information
+* Delete a client
+* Find a client
+* List all clients
+* Check whether an account exists
+* Manage account numbers and PINs
+* View account balances
 * Calculate total balances
 
-Client data is persisted using file handling, allowing information to remain available between application runs.
+Client records are loaded from files when needed and saved back after modifications.
 
----
+### Transactions
 
-## 💰 Banking Transactions
+The system supports basic banking transactions:
 
-The system supports essential banking operations:
+* Deposit
+* Withdraw
+* Transfer
+* View total balances
+* View transaction information
 
-### Deposit
+Before performing operations, the system validates the relevant client and account information and checks the available balance where required.
 
-Allows authorized users to deposit money into a client account.
+### Money Transfer
 
-### Withdraw
+The transfer module allows one client to transfer money to another client.
 
-Allows money to be withdrawn while preventing withdrawals that exceed the available balance.
+A transfer includes:
 
-### Transfer
+1. Validating the sender account.
+2. Validating the receiver account.
+3. Checking the sender's available balance.
+4. Updating the sender balance.
+5. Updating the receiver balance.
+6. Recording the operation in the transfer log.
 
-Supports transferring money between two bank accounts while:
+Transfer records contain information such as the date, sender, receiver, amount, and balances after the operation.
 
-* Validating the sender's balance
-* Updating both accounts
-* Recording the transaction
-* Storing sender and receiver balances after the transfer
-* Recording the user responsible for the operation
+### User Management
 
----
+Authorized bank users can manage other system users:
 
-## 🔄 Transfer Logging
-
-Transfers are not simply executed and forgotten.
-
-Each transfer can be recorded with information such as:
-
-* Date and time
-* Sender account number
-* Receiver account number
-* Transfer amount
-* Sender balance after transfer
-* Receiver balance after transfer
-* User who performed the transaction
-
-This provides a basic transaction-auditing mechanism.
-
----
-
-## 🔐 Authentication & Authorization
-
-The system includes a user authentication system based on:
-
-* Username
-* Password
-* User permissions
-* Login/register records
-
-Users can be assigned different permissions depending on their responsibilities.
-
-### Permission-Based Access Control
-
-The project uses a permission system based on **bit flags**, allowing multiple permissions to be combined efficiently.
-
-Examples include:
-
-* List Clients
-* Add New Client
-* Delete Client
-* Update Client
-* Find Client
-* Transactions
-* Manage Users
-* Login/Register
-
-An administrator-level permission can grant full access to the system.
-
----
-
-## 👤 Bank User Management
-
-Authorized users can:
-
-* Add new users
+* Add users
 * Update users
 * Delete users
-* Search for users
-* List all users
+* Find users
+* List users
 * Manage permissions
 * Authenticate users
 * Record login activity
 
-This creates a clear separation between **bank clients** and **system users/operators**.
+This separates the concept of a **bank client** from the **user operating the system**.
 
----
+### Authentication & Authorization
 
-# 💱 Currency Management
+The application includes a login system based on username and password.
 
-The system includes a dedicated currency module for managing currency information.
+Users can have different permissions depending on their role.
 
-Features include:
+The permission system uses **bitwise flags**, allowing multiple permissions to be combined into a single value.
+
+Examples of permissions include:
+
+* List Clients
+* Add Client
+* Delete Client
+* Update Client
+* Find Client
+* Perform Transactions
+* Manage Users
+* Login/Register
+
+An administrator can be granted full access to the available operations.
+
+### Currency Management
+
+The application includes a separate currency module for managing currency information.
+
+It provides:
 
 * List currencies
-* Find currencies
+* Find a currency
 * Update currency rates
 * Currency calculator
-* Currency-related operations through dedicated screens
 
-This makes the system more than a basic account-management application by introducing an additional financial-management module.
+The currency functionality is kept separate from the main client and transaction modules.
+
+### Logging
+
+The system records important activities in dedicated log files, including:
+
+* Login activity
+* Money transfers
+
+The logs include timestamps and relevant information about the operation.
+
+This provides basic traceability of system activity.
 
 ---
 
-# 🏗️ Project Architecture
+# Project Structure
 
-The source code is organized into separate modules:
+The project is organized into three main areas:
 
 ```text
 src/
@@ -187,7 +157,9 @@ src/
 
 ### Core
 
-Contains the main business entities and domain logic:
+Contains the main entities and core functionality of the system.
+
+Important classes include:
 
 * `Person`
 * `BankClient`
@@ -195,42 +167,58 @@ Contains the main business entities and domain logic:
 * `Currency`
 * `InterfaceCommunication`
 
+The `Person` class provides common information that can be shared by specialized entities such as clients and users.
+
 ### Lib
 
-Contains reusable functionality such as:
+Contains reusable utility functionality used throughout the application.
 
-* Date manipulation
-* String processing
+Examples include:
+
+* Date operations
+* Period/date calculations
+* String manipulation
 * Input validation
 * Utility functions
 * Random data generation
-* Text conversion
-* Basic reversible text transformation
+
+Keeping these utilities separate reduces duplication and makes them reusable across different modules.
 
 ### Screens
 
-Contains the application's console interface and separates the user interaction into dedicated modules for:
+Contains the console interface of the application.
 
-* Clients
-* Users
-* Currency
-* Transactions
+The screens are separated by responsibility:
+
+```text
+Screens/
+├── BankClient/
+├── Currency/
+├── Transactions/
+└── UserScreen/
+```
+
+There are also general screens such as:
+
 * Login
-* Main navigation
+* Main menu
+* Screen header
+
+This keeps the user interface logic separated from the core entities.
 
 ---
 
-# 🧠 Object-Oriented Programming
+# Object-Oriented Design
 
-The project applies several important OOP concepts in a practical system.
+The project was designed around several core OOP concepts.
 
-### Encapsulation
+## Encapsulation
 
-Sensitive and internal object data is kept inside classes and exposed through controlled methods.
+Each major entity manages its own data and exposes operations through class methods instead of allowing unrelated parts of the program to directly manipulate internal state.
 
-### Inheritance
+## Inheritance
 
-The system uses inheritance between the base `Person` entity and specialized entities such as:
+A base `Person` entity is used for shared personal information, with specialized classes built on top of it.
 
 ```text
 Person
@@ -238,99 +226,102 @@ Person
 └── BankUser
 ```
 
-### Abstraction
+This avoids duplicating common information and behavior.
 
-Complex operations such as loading, saving, searching, updating, and deleting records are encapsulated inside the relevant classes.
+## Abstraction
 
-### Polymorphism / Overloading
+Operations such as loading records, saving records, searching, updating, and deleting are handled by the relevant classes instead of being implemented repeatedly throughout the application.
 
-The project uses function overloading in several areas to provide different ways of performing similar operations.
+## Function Overloading
 
-### Static Operations
+The project uses function overloading where multiple versions of an operation are useful for different inputs or contexts.
 
-Static methods are used for operations that work with collections of records or provide utility functionality without requiring a specific object instance.
+## Static Members and Functions
+
+Static functionality is used for operations that belong to the class or shared data rather than a particular object instance.
 
 ---
 
-# 💾 File Handling & Persistence
+# File Handling
 
-Instead of relying on an external database, the application uses **text files as persistent storage**.
+One of the main goals of the project is to practice persistent storage using C++ file handling.
+
+Instead of using a database, the application stores records in text files.
 
 The system performs operations such as:
 
-* Reading records from files
-* Converting file records into C++ objects
-* Converting objects back into file records
-* Adding new records
-* Updating records
-* Deleting records
-* Loading records into vectors
-* Saving updated collections back to files
+* Read records from files
+* Convert file records into C++ objects
+* Store objects in vectors
+* Add records
+* Update records
+* Delete records
+* Convert objects back into file records
+* Save updated data to files
 
-A custom delimiter is used to serialize multiple fields into a single text record.
+A custom delimiter is used to store multiple fields in a single record.
 
-Example concept:
+Example:
 
 ```text
 Field1#//#Field2#//#Field3#//#Field4
 ```
 
-This provides a lightweight persistence layer without requiring a database server.
+This approach provides simple persistent storage while keeping the project focused on C++ and file handling.
 
 ---
 
-# 📝 Logging
+# Data Flow
 
-The system maintains records for important activities such as:
+A typical operation follows this general flow:
 
-* Login activity
-* Money transfers
+```text
+Text File
+   ↓
+Read Record
+   ↓
+Parse Fields
+   ↓
+Create C++ Object
+   ↓
+Perform Operation
+   ↓
+Update Object
+   ↓
+Save Updated Record
+   ↓
+Text File
+```
 
-Log records include timestamps and relevant operation data, providing basic traceability of system operations.
+For example, when updating a client:
+
+```text
+Client File
+    ↓
+Load Clients
+    ↓
+Find Client
+    ↓
+Modify Client Data
+    ↓
+Save Clients
+```
+
+This pattern is reused throughout different parts of the application.
 
 ---
 
-# 🛠️ Technologies & Concepts
+# Main Data Model
 
-### Programming
-
-* C++
-* Object-Oriented Programming
-* STL
-* `vector`
-* `string`
-* File Streams
-* Static Members
-* Enumerations
-* Structs
-* Function Overloading
-* Inheritance
-* Encapsulation
-
-### System Design
-
-* Modular organization
-* Separation of concerns
-* Entity-based design
-* Permission-based authorization
-* File-based persistence
-* Record serialization/deserialization
-* Transaction logging
-* Input validation
-
----
-
-# 📂 Data Model
-
-The application manages several categories of information:
+The main entities can be represented conceptually as:
 
 ```text
 Person
 │
 ├── BankClient
 │   ├── Account Number
-│   ├── PIN Code
-│   └── Account Balance
+│   ├── PIN
+│   └── Balance
 │
 └── BankUser
     ├── Username
@@ -338,10 +329,10 @@ Person
     └── Permissions
 ```
 
-Additional data is maintained for:
+The system also manages:
 
 ```text
-Currencies
+Currency
 Transactions
 Transfer Logs
 Login Records
@@ -349,20 +340,178 @@ Login Records
 
 ---
 
-# 🔒 Security Note
+# Validation
 
-The project includes a basic reversible text transformation for stored passwords.
+Input validation is handled through reusable validation functionality.
 
-This is implemented as part of the educational design of the project and **should not be considered production-grade password security**.
+The application validates different types of input, including:
 
-A production banking application should use modern password hashing, secure credential management, encrypted communication, database transactions, and additional security controls.
+* Numeric values
+* Required values
+* Account numbers
+* Usernames
+* Passwords
+* Transaction amounts
+* Client/user existence
+* Balance-related operations
+
+This helps prevent invalid input from reaching the core operations.
 
 ---
 
+# Security Considerations
 
+This project is an educational C++ application and is **not intended to represent a production banking system**.
 
+Authentication and password storage are implemented for learning purposes using the project's own reversible text transformation.
 
+For a real banking or production application, this approach would need to be replaced with technologies such as:
 
+* Strong password hashing
+* Secure credential storage
+* Database transactions
+* Encryption
+* Secure communication
+* Proper session management
+* Auditing and monitoring
+* Stronger authorization controls
 
+The purpose here is to demonstrate the underlying programming and software design concepts rather than production-grade financial security.
 
+---
 
+# Technologies
+
+| Technology           | Usage                         |
+| -------------------- | ----------------------------- |
+| C++                  | Main programming language     |
+| OOP                  | Application and entity design |
+| STL                  | Data structures and utilities |
+| `vector`             | In-memory record collections  |
+| `string`             | Text and record manipulation  |
+| File Streams         | Persistent storage            |
+| Inheritance          | Shared entity design          |
+| Encapsulation        | Data and behavior management  |
+| Function Overloading | Flexible operations           |
+| Bitwise Flags        | User permissions              |
+| Visual Studio        | Development environment       |
+
+---
+
+# Running the Project
+
+## Requirements
+
+* Windows
+* Visual Studio
+* C++ development tools
+
+## Steps
+
+1. Clone or download the repository.
+2. Open the project/solution in Visual Studio.
+3. Make sure the project is configured for a C++ standard supported by the source code.
+4. Build the project.
+5. Run the application.
+
+The application uses text files for persistent data, so the required data files should be available in the expected working directory.
+
+---
+
+# Example System Flow
+
+A typical session can follow this flow:
+
+```text
+Start Application
+       ↓
+Login / Register
+       ↓
+Authentication
+       ↓
+Permission Check
+       ↓
+Main Menu
+       ↓
+┌─────────────────────────────┐
+│ Client Management           │
+│ User Management             │
+│ Transactions                │
+│ Currency Management         │
+│ Login / Register            │
+└─────────────────────────────┘
+       ↓
+Perform Operation
+       ↓
+Validate Input
+       ↓
+Update Data
+       ↓
+Save Changes
+       ↓
+Log Important Operations
+```
+
+---
+
+# Why I Built This Project
+
+The main purpose of this project was to apply C++ concepts to a larger, practical system.
+
+Instead of implementing OOP concepts through small independent examples, the project combines them into one application where different components have to work together.
+
+The project helped me practice:
+
+* Designing classes around real-world entities
+* Using inheritance and encapsulation
+* Managing collections of objects
+* Working with files as persistent storage
+* Designing CRUD operations
+* Building authentication and authorization
+* Implementing permission systems
+* Handling financial transactions
+* Creating reusable utilities
+* Organizing a multi-module C++ project
+* Thinking about separation of responsibilities
+
+---
+
+# Future Improvements
+
+Possible next steps for the project include:
+
+* Replace text-file storage with a relational database
+* Introduce a repository/data-access layer
+* Improve the authentication and password-storage mechanism
+* Add unit testing
+* Improve exception handling
+* Add automated tests
+* Separate business logic from the console UI even further
+* Add a graphical or web interface
+* Expose the banking operations through a backend API
+
+---
+
+# Project Status
+
+The project is an ongoing C++ learning and development project.
+
+The current version focuses on:
+
+**OOP → File Handling → Validation → Authentication → Authorization → Transactions → Modular Design**
+
+The architecture can be extended as the project evolves.
+
+---
+
+## Author
+
+**Mahmoud Saber**
+
+C++ / Backend Development Learner
+
+---
+
+## Repository
+
+[View the source code on GitHub](https://github.com/MahmoudSaber23/Bank-Management-System-OOP)
