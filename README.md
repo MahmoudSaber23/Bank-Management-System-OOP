@@ -208,38 +208,6 @@ The `Files` directory contains the application's persistent data.
 
 ---
 
-# Object-Oriented Programming
-
-The project applies several C++ OOP concepts in a practical application.
-
-### Encapsulation
-
-Classes manage their own data and expose operations through member functions.
-
-### Inheritance
-
-Common personal information is represented through the `Person` base class and specialized into:
-
-```text
-Person
-├── BankClient
-└── BankUser
-```
-
-### Abstraction
-
-Operations such as loading, saving, searching, updating, and deleting records are handled inside the relevant classes.
-
-### Function Overloading
-
-Overloaded functions are used where the same operation needs to support different parameters or use cases.
-
-### Static Members and Functions
-
-Static functionality is used for operations that belong to a class rather than a specific object.
-
----
-
 # File Handling
 
 The project uses **text files for persistent storage instead of a database**.
