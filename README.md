@@ -1,4 +1,4 @@
-# 🏦 Bank Management System — C++
+# 🏦 Bank Management System - OOP
 
 A feature-rich **console-based Bank Management System** developed in **C++** with a strong focus on **Object-Oriented Programming, file-based persistence, access control, transaction processing, and modular software design**.
 
