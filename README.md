@@ -302,30 +302,6 @@ The project was built using:
 3. Build the project.
 4. Run the application.
 
-The application uses the files inside `src/Files/` for persistent data.
-
----
-
-# 🎯 Project Goal
-
-The main goal of this project is to apply **C++ OOP concepts** in a practical application while also gaining experience with:
-
-* Designing classes and relationships
-* Separating responsibilities
-* Working with files
-* Managing application data
-* Implementing authentication and permissions
-* Validating user input
-* Handling financial transactions
-* Organizing a multi-module C++ project
-
----
-
-## 👨‍💻 Author
-
-**Mahmoud Saber**
-
-GitHub: [MahmoudSaber23](https://github.com/MahmoudSaber23)
 
 ---
 
